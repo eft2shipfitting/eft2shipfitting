@@ -15,7 +15,11 @@ class Converter {
     this.shipFitGenerator = new ShipFitGenerator();
   }
 
-  bind() {
+  public show(): void {
+    document.getElementsByTagName("body")[0].style.display = 'block';
+  }
+
+  public bind(): void {
     this.shipfitting = document.getElementById('shipfitting');
     this.eftInput = document.getElementById('eft-input') as HTMLInputElement;
     this.fitName = document.getElementById('fit-name') as HTMLInputElement;
@@ -63,4 +67,7 @@ Caldari Navy Antimatter Charge L`
   }
 }
 
-new Converter().bind();
+const converter = new Converter();
+converter.bind();
+
+window.addEventListener('load', () => converter.show());

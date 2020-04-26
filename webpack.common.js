@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    main: './src/index.ts',
     vendor: './src/vendor.js',
+    main: './src/index.ts',
   },
   module: {
     rules: [
@@ -33,9 +33,4 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
   ],
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    }
-  }
 };
