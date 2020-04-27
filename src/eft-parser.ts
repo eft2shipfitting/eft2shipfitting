@@ -147,9 +147,8 @@ export class EftParser {
   private parseEftLine(line: string): EftLine {
     // EFT uses the x[0-9]+ notation to show number of items
     const amountMatch = /(.*)\s+x(\d+)$/.exec(line);
-    let [_, name, amountRaw] = amountMatch;
-    name = name || line
-    const amount = amountRaw !== null ? Number.parseInt(amountRaw) : 1;
+    const name = amountMatch !== null ? amountMatch[0] : line;
+    const amount = amountMatch !== null ? Number.parseInt(amountMatch[1]) : 1;
     return {
       name,
       amount
