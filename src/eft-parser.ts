@@ -113,8 +113,8 @@ export class EftParser {
 
   async parse(fitName: string, eft: string): Promise<ShipFit> {
     const [rawTitle, ...rawItems] = eft.trim().split(/\r?\n/);
-    const titleMatch = /\[(?<title>.*)\]/.exec(rawTitle);
-    const title = titleMatch === null ? 'No Title' : titleMatch.groups['title'];
+    const titleMatch = /\[(.*)\]/.exec(rawTitle);
+    const title = titleMatch === null ? 'No Title' : titleMatch[1];
 
     const eftLines = rawItems.map(x => x.trim()).filter(x => x !== '')
       .map(this.parseEftLine);
@@ -146,9 +146,10 @@ export class EftParser {
 
   private parseEftLine(line: string): EftLine {
     // EFT uses the x[0-9]+ notation to show number of items
-    const amountMatch = /(?<name>.*)\s+x(?<amount>\d+)$/.exec(line);
-    const name = amountMatch !== null ? amountMatch.groups['name'] : line;
-    const amount = amountMatch !== null ? Number.parseInt(amountMatch.groups['amount']) : 1;
+    const amountMatch = /(.*)\s+x(\d+)$/.exec(line);
+    let [_, name, amountRaw] = amountMatch;
+    name = name || line
+    const amount = amountRaw !== null ? Number.parseInt(amountRaw) : 1;
     return {
       name,
       amount
