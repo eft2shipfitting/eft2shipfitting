@@ -124,7 +124,9 @@ export class EftParser {
     const foundItems = eftLines.map(eftLine => ({
       eftLine,
       universeItem: universeItems.find(x => x.name === eftLine.name)
-    })).map(({eftLine, universeItem}) => ({
+    }))
+    .filter(({universeItem}) => universeItem !== undefined)
+    .map(({eftLine, universeItem}) => ({
       eftLine,
       universeType: universeTypes.find(x => x.type_id === universeItem.id)
     }))
